@@ -20,6 +20,28 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+      // Lista de favoritos del usuario (personajes de Marvel)
+      favorites: [
+        {
+          marvelId: {
+            type: Number,
+            required: true,
+          },
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+          },
+          thumbnail: {
+            type: String,
+            default: "",
+          },
+          addedAt: {
+            type: Date,
+            default: Date.now,
+          },
+        },
+      ],
   },
   {
     timestamps: true,
@@ -27,8 +49,8 @@ const userSchema = new mongoose.Schema(
 );
 
 // Índices para mejorar las consultas
-userSchema.index({ firebaseUid: 1 });
-userSchema.index({ email: 1 });
+// Los índices se crean a través de las propiedades (unique: true). Evitamos
+// declarar índices duplicados para no recibir advertencias de Mongoose.
 
 const User = mongoose.model("User", userSchema);
 
